@@ -1,0 +1,37 @@
+name: NPM Jobs
+
+on:
+  workflow_call:
+    inputs:
+      RUN_TESTS:
+        default: true
+        type: boolean
+
+jobs:
+  npm-jobs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: echo "npm ci"
+
+      - name: Build
+        run: echo "npm run build"
+
+      - name: Run Tests
+        if: ${{ inputs.RUN_TESTS }}
+        run: echo "npm run test"
+
+            # Create the 'naya.txt' file
+      - name: Create 'naya.txt' file
+        run: echo "navya" > naya.txt
+    
+          # Upload the 'naya.txt' file as an artifact
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+            name: my-artifacts
+            path: naya.txt

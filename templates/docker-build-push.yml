@@ -1,0 +1,30 @@
+name: Docker Build and Push
+
+on:
+  workflow_call:
+
+jobs:
+  docker-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Docker Build and Push
+        run: |
+          IMAGE_NAME=${{ vars.IMAGE_NAME }}
+          ACR_REPO=${{ vars.ACR_REGISTRY }}
+          DOCKER_TAG=${{ github.ref_name }}-${{ github.run_id }}
+
+          # Docker Log in to Azure Container Registry (ACR)
+          docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} $ACR_REPO
+
+          # Build the Docker image
+          docker build -t $IMAGE_NAME .
+
+          # Tag the Docker image with ACR repository and tag
+          docker tag $IMAGE_NAME:latest $ACR_REPO/$IMAGE_NAME:$DOCKER_TAG
+
+          # Push Docker Image to ACR
+          docker push $ACR_REPO/$IMAGE_NAME:$DOCKER_TAG
