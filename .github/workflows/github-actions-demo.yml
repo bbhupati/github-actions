@@ -1,11 +1,14 @@
 on: [push]
 
 jobs:
-  npm-build-test:
-    uses: ./.github/workflows/npm-build.yml
+  # npm-build-test:
+  #   uses: ./.github/workflows/npm-build.yml
 
-  docker-build-push:
-    uses: ./.github/workflows/docker-build-push.yml  # No version specified here
-    secrets: inherit
-    needs: [npm-build-test]
-    if: ${{ always() && contains(needs.*.result, 'success') }}
+  # docker-build-push:
+  #   uses: ./.github/workflows/docker-build-push.yml  # No version specified here
+  #   secrets: inherit
+  #   needs: [npm-build-test]
+  #   if: ${{ always() && contains(needs.*.result, 'success') }}
+  
+  update-app-service-config:
+    uses: ./.github/workflows/app-serviceconfig.yml

@@ -1,0 +1,54 @@
+name: Update App Service Config
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Authenticate with Azure using a service principal
+      - name: Log in to Azure
+        run: |
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+
+      # Use the Azure App Service Settings Action to update the configuration
+      - name: Update App Service Configuration
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'bhupathiapps'  # Replace with the name of your Azure App Service
+          resource-group: 'githuactions'  # Replace with the name of your Azure Resource Group
+          settings: |
+            [
+                {
+                "name": "DOCKER_ENABLE_CI",
+                "value": "true",
+                "slotSetting": false
+                },
+                {
+                "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                "value": "ov62/DGu1iuIFzLmqqNpaXBh+vETmmE702Dyr43KbZ+ACRBA+eiY",
+                "slotSetting": false
+                },
+                {
+                "name": "DOCKER_REGISTRY_SERVER_URL",
+                "value": "https://bhupathigithu.azurecr.io",
+                "slotSetting": false
+                },
+                {
+                "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                "value": "bhupathigithu",
+                "slotSetting": false
+                },
+                {
+                "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                "value": "false",
+                "slotSetting": false
+                }
+            ]
