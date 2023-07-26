@@ -1,0 +1,11 @@
+on: [push]
+
+jobs:
+  npm-build-test:
+    uses: ./templates/npm-build.yml
+
+  docker-build-push:
+    uses: ./templates/docker-build-push.yml  # No version specified here
+    secrets: inherit
+    needs: [npm-build-test]
+    if: ${{ always() && contains(needs.*.result, 'success') }}
