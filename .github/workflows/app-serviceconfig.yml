@@ -52,7 +52,13 @@ jobs:
                 "slotSetting": false
                 }
             ]
-      - name: Create ACR Connection String
-        run: |
-          az keyvault secret set --name "ACRConnectionString" --vault-name "githubactions-key " --value "acrkey"
+          connection-strings-json: |
+            [
+              {
+                "name": "customacr",
+                "value": "@Microsoft.KeyVault(SecretUri=https://githubactions-key.vault.azure.net/secrets/acrkey)",
+                "type": "Custom",
+                "slotSetting": false
+              }
+            ]
     
