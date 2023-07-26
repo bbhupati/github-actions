@@ -24,7 +24,7 @@ jobs:
         with:
           app-name: 'bhupathiapps'  # Replace with the name of your Azure App Service
           resource-group: 'githuactions'  # Replace with the name of your Azure Resource Group
-          settings: |
+          app-settings-json: |
             [
                 {
                 "name": "DOCKER_ENABLE_CI",
