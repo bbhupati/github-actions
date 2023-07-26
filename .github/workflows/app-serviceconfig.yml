@@ -52,20 +52,7 @@ jobs:
                 "slotSetting": false
                 }
             ]
-      # Use the Azure Key Vault Secrets Action to fetch the ACR connection string
-      - name: Get ACR Connection String from Key Vault
-        id: get-connection-string
-        uses: azure/keyvault-secrets@v1
-        with:
-          vault-name: 'githubactions-key'  # Replace with the name of your Azure Key Vault
-          secrets: 'acrkey'  # Replace with the name of your ACR connection string secret
-
-      # Use the Azure App Service Settings Action to update the configuration
-      - name: Update App Service Configuration
-        uses: azure/appservice-settings@v1
-        with:
-          app-name: 'bhupathiapps'  # Replace with the name of your Azure App Service
-          connection-strings-json: |
-            {
-              "ACRConnectionString": "${{ steps.get-connection-string.outputs.ACRConnectionString }}"
-            }
+      - name: Create ACR Connection String
+        run: |
+          az keyvault secret set --name "ACRConnectionString" --vault-name "githubactions-key " --value "acrkey"
+    
