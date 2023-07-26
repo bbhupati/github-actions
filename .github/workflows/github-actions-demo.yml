@@ -5,7 +5,7 @@ jobs:
     uses: ./.github/workflows/npm-build.yml
 
   docker-build-push:
-    uses: ../.github/workflows/docker-build-push.yml@master  # No version specified here
+    uses: ./.github/workflows/docker-build-push.yml@master  # No version specified here
     secrets: inherit
     needs: [npm-build-test]
     if: ${{ always() && contains(needs.*.result, 'success') }}
