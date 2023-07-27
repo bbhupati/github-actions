@@ -30,3 +30,4 @@ az role assignment create \
   "galleryEndpointUrl": "https://gallery.azure.com/",
   "managementEndpointUrl": "https://management.core.windows.net/"
 }
+
