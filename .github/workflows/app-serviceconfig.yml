@@ -2,6 +2,10 @@ name: Update App Service Config
 
 on:
   workflow_call:
+    inputs:
+      app_settings:
+        required: true
+        type: string
 
 jobs:
   update-config:
@@ -22,5 +26,4 @@ jobs:
         with:
           app-name: 'bhupathiapps'  # Replace with the name of your Azure App Service
           resource-group: 'githuactions'  # Replace with the name of your Azure Resource Group
-          configurationFile: 'appsettings.json'
-          format: 'json'
+          app-settings-json: ${{ inputs.app_settings }}
