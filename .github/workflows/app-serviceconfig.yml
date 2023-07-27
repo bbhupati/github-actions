@@ -1,11 +1,7 @@
-name: Update App Service Config
-
 on:
-  workflow_call:
-    inputs:
-      app_settings:
-        required: true
-        type: string
+  push:
+    branches:
+      - master
 
 jobs:
   update-config:
@@ -26,4 +22,41 @@ jobs:
         with:
           app-name: 'bhupathiapps'  # Replace with the name of your Azure App Service
           resource-group: 'githuactions'  # Replace with the name of your Azure Resource Group
-          app-settings-json: ${{ inputs.app_settings }}
+          app-settings-json: |
+            [
+                {
+                "name": "DOCKER_ENABLE_CI",
+                "value": "true",
+                "slotSetting": false
+                },
+                {
+                "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                "value": "ov62/DGu1iuIFzLmqqNpaXBh+vETmmE702Dyr43KbZ+ACRBA+eiY",
+                "slotSetting": false
+                },
+                {
+                "name": "DOCKER_REGISTRY_SERVER_URL",
+                "value": "https://bhupathigithu.azurecr.io",
+                "slotSetting": false
+                },
+                {
+                "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                "value": "bhupathigithu",
+                "slotSetting": false
+                },
+                {
+                "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                "value": "false",
+                "slotSetting": false
+                }
+            ]
+          connection-strings-json: |
+            [
+              {
+                "name": "customacr",
+                "value": "@Microsoft.KeyVault(SecretUri=https://githubactions-key.vault.azure.net/secrets/acrkey)",
+                "type": "Custom",
+                "slotSetting": false
+              }
+            ]
+    
