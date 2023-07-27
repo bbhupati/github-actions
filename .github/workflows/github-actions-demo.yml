@@ -12,5 +12,6 @@ jobs:
   
   update-app-service-config:
     uses: ./.github/workflows/app-serviceconfig.yml
+    secrets: inherit
     with:
       app_settings: "app-settings.json"
