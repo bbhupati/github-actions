@@ -2,10 +2,6 @@ name: Update App Service Config
 
 on:
   workflow_call:
-    inputs:
-      app_settings:
-        required: true
-        type: string
 
 jobs:
   update-config:
