@@ -12,5 +12,3 @@ jobs:
   
   update-app-service-config:
     uses: ./.github/workflows/app-serviceconfig.yml
-    with:
-      app_settings: app-settings.json
