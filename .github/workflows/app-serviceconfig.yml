@@ -1,9 +1,10 @@
 name: Update App Service Config
 
 on:
-  push:
-    branches:
-      - master
+  workflow_call:
+    inputs:
+      app_settings:
+        type: file
 
 jobs:
   update-config:
@@ -24,4 +25,4 @@ jobs:
         with:
           app-name: 'bhupathiapps'  # Replace with the name of your Azure App Service
           resource-group: 'githuactions'  # Replace with the name of your Azure Resource Group
-          app-settings-json: ${{ toJson(fromJSON(inputs.app-settings)) }}
+          app-settings-json: ${{ inputs.app_settings }}
