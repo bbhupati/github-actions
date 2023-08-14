@@ -1,41 +1,65 @@
-name: Build and Deploy
-
-on:
-  push:
-    branches:
-      - "*"
+on: [push]
 
 jobs:
-  build_and_deploy:
+  set-environment:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Determine environment based on branch name
         id: set_env
         run: |
           if [[ ${{ github.ref }} == "refs/heads/dev" ]]; then
-          echo "environment=dev" >> $GITHUB_ENV
+            echo "environment=dev" >> $GITHUB_ENV
           elif [[ ${{ github.ref }} == "refs/heads/qa" ]]; then
             echo "environment=qa" >> $GITHUB_ENV
           elif [[ ${{ github.ref }} == "refs/heads/master" ]]; then
             echo "environment=prod" >> $GITHUB_ENV
           else
-            echo "environment=unknow environment" >> $GITHUB_ENV
+            echo "environment=unknown" >> $GITHUB_ENV
           fi
-        continue-on-error: true
-      
+
       - name: Read environment file and set environment variables
         run: |
           ENV_FILE=".github/workflows/${{ env.environment }}-vars.env"
           cat $ENV_FILE >> $GITHUB_ENV
-          echo "Loaded $ENV_FILE into environment variables"
-      
-      - name: Display loaded environment variables
+
+  npm-build-test:
+    runs-on: ubuntu-latest
+    needs: set-environment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Display environment variables
         run: |
           echo "API_URL=$API_URL"
           echo "DATABASE_URL=$DATABASE_URL"
-          
-      # Continue with your build and deployment steps here
+      # ... rest of the job steps
+
+  docker-build-push:
+    runs-on: ubuntu-latest
+    needs: set-environment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Display environment variables
+        run: |
+          echo "API_URL=$API_URL"
+          echo "DATABASE_URL=$DATABASE_URL"
+      # ... rest of the job steps
+
+  update-app-service-config:
+    runs-on: ubuntu-latest
+    needs: set-environment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Display environment variables
+        run: |
+          echo "API_URL=$API_URL"
+          echo "DATABASE_URL=$DATABASE_URL"
+      # ... rest of the job steps
