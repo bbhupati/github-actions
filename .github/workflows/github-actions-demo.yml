@@ -15,7 +15,9 @@ jobs:
       
       - name: Read .env file and set environment variables
         run: |
+          cat dev.env
           echo "$(cat dev.env)" >> $GITHUB_ENV
+          echo $GITHUB_ENV
           echo "Loaded .env into environment variables"
       
       - name: Display loaded environment variables
