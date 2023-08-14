@@ -78,20 +78,7 @@ on:
   push:
     branches: ['dev']
 
-env:
-  one: onevalue
-  two: twovalue
-  three: threevalue
-
 jobs:
-  job0:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "${{ env.one }}"
-          echo "${{ env.two }}"
-          echo "${{ env.three }}"
-
   job1:
     runs-on: ubuntu-latest
     # Map a step output to a job output
