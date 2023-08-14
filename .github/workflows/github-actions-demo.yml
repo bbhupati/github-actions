@@ -16,6 +16,8 @@ jobs:
       - name: Read .env file and set environment variables
         run: |
           ls -l
+          cd .github/workflows
+          ls -l
           cat dev-vars.env
           echo "$(cat dev-vars.env)" >> $GITHUB_ENV
           echo $GITHUB_ENV
