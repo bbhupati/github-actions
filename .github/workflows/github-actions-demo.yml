@@ -13,15 +13,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Read .env file and set environment variables
+      - name: Determine environment based on branch name
+        id: set_env
         run: |
-          ls -l
-          cd .github/workflows
-          ls -l
-          cat dev-vars.env
-          echo "$(cat dev-vars.env)" >> $GITHUB_ENV
-          echo $GITHUB_ENV
-          echo "Loaded .env into environment variables"
+          if [[ ${{ github.ref }} == "refs/heads/qa" ]]; then
+            echo "environment=qa" >> $GITHUB_ENV
+          elif [[ ${{ github.ref }} == "refs/heads/prod" ]]; then
+            echo "environment=prod" >> $GITHUB_ENV
+          else
+            echo "environment=dev" >> $GITHUB_ENV
+          fi
+        continue-on-error: true
+      
+      - name: Read environment file and set environment variables
+        run: |
+          ENV_FILE="${{ env.environment }}-vars.env"
+          cat $ENV_FILE >> $GITHUB_ENV
+          echo "Loaded $ENV_FILE into environment variables"
       
       - name: Display loaded environment variables
         run: |
