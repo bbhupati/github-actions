@@ -1,46 +1,26 @@
-name: Pull Request CI
+name: Build and Deploy
 
 on:
   push:
-  workflow_dispatch:
-  pull_request:
     branches:
-      - master
+      - "*"
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-  test:
-    runs-on: ubuntu-latest
-    if: ${{ needs.build.result == 'success' }}
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: echo "npm test"
+      
+      - name: Read .env file and set environment variables
+        run: |
+          echo "$(cat dev.env)" >> $GITHUB_ENV
+          echo "Loaded .env into environment variables"
+      
+      - name: Display loaded environment variables
+        run: |
+          echo "API_URL=$API_URL"
+          echo "DATABASE_URL=$DATABASE_URL"
+          
+      # Continue with your build and deployment steps here
