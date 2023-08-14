@@ -16,12 +16,14 @@ jobs:
       - name: Determine environment based on branch name
         id: set_env
         run: |
-          if [[ ${{ github.ref }} == "refs/heads/qa" ]]; then
+          if [[ ${{ github.ref }} == "refs/heads/dev*" ]]; then
+          echo "environment=dev" >> $GITHUB_ENV
+          elif [[ ${{ github.ref }} == "refs/heads/qa*" ]]; then
             echo "environment=qa" >> $GITHUB_ENV
-          elif [[ ${{ github.ref }} == "refs/heads/prod" ]]; then
+          elif [[ ${{ github.ref }} == "refs/heads/master" ]]; then
             echo "environment=prod" >> $GITHUB_ENV
           else
-            echo "environment=dev" >> $GITHUB_ENV
+            echo "environment=unknow environment" >> $GITHUB_ENV
           fi
         continue-on-error: true
       
