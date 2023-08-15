@@ -113,7 +113,7 @@ on:
 
 jobs:
   job1:
-    uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yaml@master
+    uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
   # job2:
   #   runs-on: ubuntu-latest
   #   needs: job1
