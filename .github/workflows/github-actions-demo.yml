@@ -4,49 +4,6 @@
 #   push:
 #   workflow_dispatch:
 
-# jobs:
-#   set-environment:
-#     runs-on: ubuntu-latest
-#     outputs:
-#       environment_type: ${{ steps.set_env.outputs.environment }}
-#     steps:
-#       - name: Set environment based on branch name
-#         id: set_env
-#         run: |
-#           if [[ ${{ github.ref }} == "refs/heads/dev" ]]; then
-#             echo "environment=dev" >> $GITHUB_OUTPUT
-#           elif [[ ${{ github.ref }} == "refs/heads/qa" ]]; then
-#             echo "environment=qa" >> $GITHUB_OUTPUT
-#           elif [[ ${{ github.ref }} == "refs/heads/master" ]]; then
-#             echo "environment=prod" >> $GITHUB_OUTPUT
-#           else
-#             echo "environment=unknown environment" >> $GITHUB_OUTPUT
-#           fi
-#   docker-build-push:
-#     needs: [set-environment]
-#     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
-#     env:
-#       ENVIRONMENT_TYPE: ${{ needs.set-environment.outputs.environment_type }}
-
-
-
-#   npm-build-test:
-#     runs-on: ubuntu-latest
-#     needs: [set-environment]
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-#       - name: Read environment file and set environment variables
-#         run: |
-#           echo "env is ${{ needs.set-environment.outputs.environment_type }}"
-#           ENV_FILE=".github/workflows/${{ needs.set-environment.outputs.environment_type }}-vars.env"
-#           cat $ENV_FILE >> $GITHUB_ENV
-#           echo "Loaded $ENV_FILE into environment variables"
-#       - name: Display loaded environment variables
-#         run: |
-#           echo "API_URL=$API_URL"
-#           echo "DATABASE_URL=$DATABASE_URL"
-
 #   docker-build-push:
 #     runs-on: ubuntu-latest
 #     needs: [set-environment]
@@ -112,5 +69,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  job1:
+  npm:
+    uses: bbhupati/poc-action-templates/.github/workflows/npm-build.yml@master
+  docker:
     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
