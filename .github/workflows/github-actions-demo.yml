@@ -109,5 +109,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Shared Workflow from Another Repository
-        uses: bbhupati/poc-action-templates/docker-build-push.yml@master
+        uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
 
