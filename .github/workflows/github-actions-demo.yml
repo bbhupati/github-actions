@@ -23,8 +23,9 @@ jobs:
             echo "environment=unknown environment" >> $GITHUB_OUTPUT
           fi
   docker:
+    needs: [set-environment]
     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
-    
+
 #   npm-build-test:
 #     runs-on: ubuntu-latest
 #     needs: [set-environment]
