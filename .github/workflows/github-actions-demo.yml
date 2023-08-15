@@ -72,4 +72,5 @@ jobs:
   npm:
     uses: bbhupati/poc-action-templates/.github/workflows/npm-build.yml@master
   docker:
+    needs: npm
     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
