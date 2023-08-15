@@ -22,9 +22,13 @@ jobs:
           else
             echo "environment=unknown environment" >> $GITHUB_OUTPUT
           fi
-  docker:
+  docker-build-push:
     needs: [set-environment]
     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
+    env:
+      ENVIRONMENT_TYPE: ${{ needs.set-environment.outputs.environment_type }}
+
+
 
 #   npm-build-test:
 #     runs-on: ubuntu-latest
