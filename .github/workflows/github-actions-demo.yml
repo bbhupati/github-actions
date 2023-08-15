@@ -97,7 +97,17 @@
 #       - run: echo ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}
 
 
-name: Trigger Shared Workflow
+# name: Trigger Shared Workflow
+
+# on:
+#   push:
+#     branches:
+#       - "*"  # Change this to your desired branch
+
+# jobs:
+#   trigger-shared-workflow:
+#     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
+
 
 on:
   push:
@@ -106,5 +116,10 @@ on:
 
 jobs:
   trigger-shared-workflow:
-    uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      - name: Trigger Reusable Workflow
+        uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
