@@ -23,8 +23,8 @@ jobs:
       - id: step1
         run: |
           echo "firstword=hello" >> $GITHUB_ENV
-          cat $GITHUB_ENV
-          echo "env: ${{ env.firstword }}"  # Correct syntax to access the environment variable
+          source $GITHUB_ENV  # Load the environment variables
+          echo "env: $firstword"  # This should now work
 
 
 
