@@ -26,6 +26,6 @@ jobs:
           
       - name: Download artifact
         run: |
-          name=${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/dev' && 'dev' || 'unknown' }}
+          name=${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/123' && 'dev' || 'unknown' }}
           echo $name
 
