@@ -4,34 +4,33 @@ on:
   push:
   workflow_dispatch:
 
-# jobs:
-#   pre-job:
-#     uses: bbhupati/poc-action-templates/.github/workflows/set-env.yml@master
-#   npm:
-#     needs: pre-job
-#     uses: bbhupati/poc-action-templates/.github/workflows/npm-build.yml@master
-#   docker:
-#     needs: [pre-job,npm]
-#     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
-
-
 jobs:
-  job1:
-    runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      output1: ${{ steps.step1.outputs.test }}
-      output2: ${{ steps.step2.outputs.test }}
-    steps:
-      - id: step1
-        run: echo "test=hello" >> "$GITHUB_OUTPUT"
-      - id: step2
-        run: echo "test=world" >> "$GITHUB_OUTPUT"
-  job2:
-    runs-on: ubuntu-latest
-    needs: job1
-    steps:
-      - env:
-          OUTPUT1: ${{needs.job1.outputs.output1}}
-          OUTPUT2: ${{needs.job1.outputs.output2}}
-        run: echo "$OUTPUT1 $OUTPUT2"
+  upload:
+    uses: bbhupati/poc-action-templates/.github/workflows/upload-artifacts.yml@master
+  download:
+    uses: bbhupati/poc-action-templates/.github/workflows/download-artifacts.yml@master
+  # docker:
+  #   needs: [pre-job,npm]
+  #   uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
+
+
+# jobs:
+#   job1:
+#     runs-on: ubuntu-latest
+#     # Map a step output to a job output
+#     outputs:
+#       output1: ${{ steps.step1.outputs.test }}
+#       output2: ${{ steps.step2.outputs.test }}
+#     steps:
+#       - id: step1
+#         run: echo "test=hello" >> "$GITHUB_OUTPUT"
+#       - id: step2
+#         run: echo "test=world" >> "$GITHUB_OUTPUT"
+#   job2:
+#     runs-on: ubuntu-latest
+#     needs: job1
+#     steps:
+#       - env:
+#           OUTPUT1: ${{needs.job1.outputs.output1}}
+#           OUTPUT2: ${{needs.job1.outputs.output2}}
+#         run: echo "$OUTPUT1 $OUTPUT2"
