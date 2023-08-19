@@ -11,5 +11,5 @@ jobs:
     needs: pre-job
     uses: bbhupati/poc-action-templates/.github/workflows/npm-build.yml@master
   docker:
-    needs: npm
+    needs: [pre-job,npm]
     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
