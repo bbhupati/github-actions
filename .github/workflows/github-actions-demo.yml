@@ -15,14 +15,6 @@ on:
 #     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
 
 
-name: Deployment
-
-on:
-  push:
-    branches:
-      - main
-      - dev
-
 jobs:
   deployment:
     runs-on: ubuntu-latest
