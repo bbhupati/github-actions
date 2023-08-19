@@ -20,4 +20,5 @@ jobs:
     uses: bbhupati/poc-action-templates/.github/workflows/reusable-workflow.yaml@master
 
   job2:
+    needs: job1
     uses: bbhupati/poc-action-templates/.github/workflows/values.yml@master
