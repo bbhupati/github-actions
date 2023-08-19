@@ -8,6 +8,7 @@ jobs:
   upload:
     uses: bbhupati/poc-action-templates/.github/workflows/upload-artifacts.yml@master
   download:
+    needs: upload
     uses: bbhupati/poc-action-templates/.github/workflows/download-artifacts.yml@master
   # docker:
   #   needs: [pre-job,npm]
