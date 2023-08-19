@@ -4,9 +4,9 @@ on:
   push:
   workflow_dispatch:
 
-# jobs:
-#   pre-job:
-#     uses: bbhupati/poc-action-templates/.github/workflows/set-env.yml@master
+jobs:
+  pre-job:
+    uses: bbhupati/poc-action-templates/.github/workflows/values.yml@master
 #   npm:
 #     needs: pre-job
 #     uses: bbhupati/poc-action-templates/.github/workflows/npm-build.yml@master
@@ -15,17 +15,17 @@ on:
 #     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
 
 
-jobs:
-  deployment:
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/dev' && 'dev' || 'unknown' }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+# jobs:
+#   deployment:
+#     runs-on: ubuntu-latest
+#     environment:
+#       name: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/dev' && 'dev' || 'unknown' }}
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
           
-      - name: Download artifact
-        run: |
-          name=${{ github.ref_name == 'main' && 'production' || github.ref_name == 'dev' && 'dev' || 'unknown' }}
-          echo $name
+#       - name: Download artifact
+#         run: |
+#           name=${{ github.ref_name == 'main' && 'production' || github.ref_name == 'dev' && 'dev' || 'unknown' }}
+#           echo $name
 
