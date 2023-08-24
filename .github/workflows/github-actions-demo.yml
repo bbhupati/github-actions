@@ -7,25 +7,9 @@ on:
 jobs:
   pre-job:
     uses: bbhupati/poc-action-templates/.github/workflows/values.yml@master
-#   npm:
-#     needs: pre-job
-#     uses: bbhupati/poc-action-templates/.github/workflows/npm-build.yml@master
-#   docker:
-#     needs: [pre-job,npm]
-#     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
-
-
-# jobs:
-#   deployment:
-#     runs-on: ubuntu-latest
-#     environment:
-#       name: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/dev' && 'dev' || 'unknown' }}
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-          
-#       - name: Download artifact
-#         run: |
-#           name=${{ github.ref_name == 'main' && 'production' || github.ref_name == 'dev' && 'dev' || 'unknown' }}
-#           echo $name
-
+  npm:
+    needs: pre-job
+    uses: bbhupati/poc-action-templates/.github/workflows/npm-build.yml@master
+  docker:
+    needs: [pre-job,npm]
+    uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
