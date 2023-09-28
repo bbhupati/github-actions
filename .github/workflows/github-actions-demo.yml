@@ -14,8 +14,6 @@
 #     needs: [pre-job,npm]
 #     uses: bbhupati/poc-action-templates/.github/workflows/docker-build-push.yml@master
 
-name: Download Secret File
-
 on:
   push:
   workflow_dispatch:
@@ -23,18 +21,15 @@ on:
 jobs:
   download-secret:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download Secret File
-        uses: softprops/action-gh-release@v1
-        with:
-          asset_url: ${{ secrets.ACR_PASSWORD }}  # Replace with your secret file's URL
-          target_path: ./downloaded-secret-file.txt    # Replace with your desired file name
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Download Secret File
-        run: ls -l
+      - name: Set up environment variables
+        run: |
+          # Set the secret value to an environment variable
+          echo "${{ secrets.ACR_PASSWORD }}" > ./secret-file.txt
+
+      - name: Display the downloaded secret file
+        run: cat ./secret-file.txt
+
