@@ -25,14 +25,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up environment variables
+      - name: Write key file
+        env:
+          AUTH: ${{ secrets.ACR_PASSWORD }}
         run: |
-          # Set the value of ACR_PASSWORD secret to a file
-          echo "${{ secrets.ACR_PASSWORD }}" > ./secret-file.txt
-
-      - name: Decode Base64 content
-        run: |
-          cat ./secret-file.txt | base64 -d > ./decoded-secret-file.txt
+          echo "$AUTH" | base64 --decode > decoded-secret-file.txt
 
       - name: Display the decoded secret file
         run: cat ./decoded-secret-file.txt
