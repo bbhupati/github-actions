@@ -21,6 +21,8 @@ on:
 jobs:
   download-secret:
     runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
