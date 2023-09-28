@@ -22,16 +22,34 @@ jobs:
   download-secret:
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: dev
+      ENVIRONMENT: dev  # Change this to the desired environment (e.g., dev, qa, prod)
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up environment variables
         run: |
+          # Choose the secret based on the environment
+          case "${{ env.ENVIRONMENT }}" in
+            "dev")
+              SECRET_NAME="ACR_REGISTRY_DEV"
+              ;;
+            "qa")
+              SECRET_NAME="ACR_REGISTRY_QA"
+              ;;
+            "prod")
+              SECRET_NAME="ACR_REGISTRY_PROD"
+              ;;
+            *)
+              echo "Invalid environment specified"
+              exit 1
+              ;;
+          esac
+          
           # Set the secret value to an environment variable
-          echo "${{ vars.ACR_REGISTRY }}" > ./secret-file.txt
+          echo "${{ vars.IMAGE_NAME }}" > ./secret-file.txt
 
       - name: Display the downloaded secret file
         run: cat ./secret-file.txt
+
 
