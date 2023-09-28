@@ -32,24 +32,19 @@ jobs:
           # Choose the secret based on the environment
           case "${{ env.ENVIRONMENT }}" in
             "dev")
-              SECRET_NAME="ACR_REGISTRY_DEV"
+              echo "${{ vars.ACR_REGISTRY_DEV }}" > ./secret-file.txt
               ;;
             "qa")
-              SECRET_NAME="ACR_REGISTRY_QA"
+              echo "${{ vars.ACR_REGISTRY_STAGING }}" > ./secret-file.txt
               ;;
             "prod")
-              SECRET_NAME="ACR_REGISTRY_PROD"
+              echo "${{ vars.ACR_REGISTRY_PROD }}" > ./secret-file.txt
               ;;
             *)
               echo "Invalid environment specified"
               exit 1
               ;;
           esac
-          
-          # Set the secret value to an environment variable
-          echo "${{ env.SECRET_NAME }}" > ./secret-file.txt
 
       - name: Display the downloaded secret file
         run: cat ./secret-file.txt
-
-
