@@ -47,7 +47,7 @@ jobs:
           esac
           
           # Set the secret value to an environment variable
-          echo "${{ vars.IMAGE_NAME }}" > ./secret-file.txt
+          echo "${{ env.SECRET_NAME }}" > ./secret-file.txt
 
       - name: Display the downloaded secret file
         run: cat ./secret-file.txt
