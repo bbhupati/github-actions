@@ -7,6 +7,7 @@ on:
 jobs:
   pre-job:
     uses: bbhupati/poc-action-templates/.github/workflows/values.yml@master
+    secrets: inherit
 #   npm:
 #     needs: pre-job
 #     uses: bbhupati/poc-action-templates/.github/workflows/npm-build.yml@master
